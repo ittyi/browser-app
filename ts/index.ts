@@ -1,10 +1,18 @@
-import { sum } from './sum'
-
-console.log(sum(1, 2))
+import { EventListener } from './EventListener'
 
 class Application {
 	start() {
-		console.log("Hello, wourld!")
+		const eventListener = new EventListener()
+		const button = document.getElementById('deleteAllDoneTask')
+
+		if (!button) return
+
+		eventListener.add(
+			'sample',
+			'click',
+			button,
+			() => alert('clicked'),
+		)
 	}
 }
 
