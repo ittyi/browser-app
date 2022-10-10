@@ -1,10 +1,14 @@
 import { EventListener } from './EventListener'
 import { Task } from "./Task";
 import { TaskCollection } from "./TaskCollection";
+import { TaskRederer } from "./TaskRenderer";
 
 class Application {
 	private readonly eventListener = new EventListener()
 	private readonly taskCollection = new TaskCollection()
+	private readonly taskRenderer = new TaskRederer(
+		document.getElementById('todoList') as HTMLElement
+	)
 
 	start() {
 		const createForm = document.getElementById('createForm') as HTMLElement
@@ -24,6 +28,9 @@ class Application {
 		console.log(task)
 		this.taskCollection.add(task)
 		console.log(this.taskCollection)
+		this.taskRenderer.append(task)
+
+		titleInput.value = ''
 	}
 }
 
