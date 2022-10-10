@@ -13,6 +13,8 @@ class Application {
 			button,
 			() => alert('clicked'),
 		)
+
+		eventListener.remove('sample')
 	}
 }
 
