@@ -49,6 +49,8 @@ class Application {
 
 		this.taskCollection.delete(task)
 		console.log('taskCollection:', this.taskCollection)
+
+		this.taskRenderer.remove(task)
 	}
 }
 
