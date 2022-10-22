@@ -46,6 +46,9 @@ class Application {
 
 		console.log(task)
 		this.eventListener.remove(task.id)
+
+		this.taskCollection.delete(task)
+		console.log('taskCollection:', this.taskCollection)
 	}
 }
 
