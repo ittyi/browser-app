@@ -36,20 +36,20 @@ export class TaskRederer {
 		const taskEl = document.getElementById(task.id)
 		if (!taskEl) return 
 
-		this.todoList.removeChild(taskEl)
+		// this.todoList.removeChild(taskEl)
+		if (task.status === statusMap.todo) {
+			this.todoList.removeChild(taskEl)
+		}
+
+		if (task.status === statusMap.doing) {
+			this.doingList.removeChild(taskEl)
+		}
+
+		if (task.status === statusMap.done) {
+			this.doneList.removeChild(taskEl)
+		}
 	}
 
-	// subscribeDragAndDrop() {
-	// 	dragula([this.todoList, this.doingList, this.doneList]).on(
-	// 		'drop',
-	// 		(el, target, source, sibling) => {
-	// 			console.log('el', el)
-	// 			console.log('target', target)
-	// 			console.log('source', source)
-	// 			console.log('sibling', sibling)
-	// 		}
-	// 	)
-	// }
 	subscribeDragAndDrop(
 		onDrop: Element,
 		sibling: Element | null,
