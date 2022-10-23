@@ -1,7 +1,13 @@
 import { Task } from "./Task";
+import dragula  from "dragula";
+import { Status, Task, statusMap } from "./Task";
 
 export class TaskRederer {
-	constructor(private readonly todoList: HTMLElement) {}
+	constructor(
+		private readonly todoList: HTMLElement,
+		private readonly doingList: HTMLElement,
+		private readonly doneList: HTMLElement,
+		) {}
 
 	append(task:Task) {
 		const {taskEl, deleteButtonEl} = this.render(task)
@@ -30,6 +36,44 @@ export class TaskRederer {
 		const taskEl = document.getElementById(task.id)
 		if (!taskEl) return 
 
-		this.todoList.removeChild(taskEl)
+		// this.todoList.removeChild(taskEl)
+		if (task.status === statusMap.todo) {
+			this.todoList.removeChild(taskEl)
+		}
+
+		if (task.status === statusMap.doing) {
+			this.doingList.removeChild(taskEl)
+		}
+
+		if (task.status === statusMap.done) {
+			this.doneList.removeChild(taskEl)
+		}
+	}
+
+	subscribeDragAndDrop(
+		onDrop: Element,
+		sibling: Element | null,
+		newStatus: Status
+	) {
+		dragula([this.todoList, this.doingList, this.doneList]).on(
+			'drop',
+			(el, target, source, sibling) => {
+				console.log('el', el)
+				console.log('target', target)
+				console.log('source', source)
+				console.log('sibling', sibling)
+
+				let newStatus: Status = statusMap.todo
+
+				if (target.id === 'doingList') newStatus = statusMap.doing
+				if (target.id === 'doneList') newStatus = statusMap.done
+
+				onDrop(el, sibling, newStatus)
+			}
+		)
+	}
+
+	getId(el: Element) {
+		return el.id
 	}
 }
