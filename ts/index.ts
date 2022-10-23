@@ -1,5 +1,5 @@
 import { EventListener } from './EventListener'
-import { Task } from "./Task";
+import { Status, Task } from "./Task";
 import { TaskCollection } from "./TaskCollection";
 import { TaskRederer } from "./TaskRenderer";
 
@@ -16,7 +16,7 @@ class Application {
 		const createForm = document.getElementById('createForm') as HTMLElement
 
 		this.eventListener.add('submit-handler', 'submit', createForm, this.handleSubmit)
-		this.taskRenderer.subscribeDragAndDrop()
+		this.taskRenderer.subscribeDragAndDrop(this.handleDropAndDrop)
 	}
 
 	private handleSubmit = (e: Event) => {
@@ -54,6 +54,24 @@ class Application {
 		console.log('taskCollection:', this.taskCollection)
 
 		this.taskRenderer.remove(task)
+	}
+
+	private handleDropAndDrop = (el: Element, sibling: Element | null, newStatus: Status) => {
+		const taskId = this.taskRenderer.getId(el)
+
+		if (!taskId) return
+
+		console.log('taskId', taskId)
+		console.log('sibling', sibling)
+		console.log('newStatus', newStatus)
+		const task = this.taskCollection.find(taskId)
+
+		if (!task) return
+
+		task.update({status: newStatus})
+		this.taskCollection.update(task)
+
+		console.log(sibling)
 	}
 }
 

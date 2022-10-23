@@ -1,5 +1,6 @@
 import { Task } from "./Task";
 import dragula  from "dragula";
+import { Status, Task, statusMap } from "./Task";
 
 export class TaskRederer {
 	constructor(
@@ -38,7 +39,22 @@ export class TaskRederer {
 		this.todoList.removeChild(taskEl)
 	}
 
-	subscribeDragAndDrop() {
+	// subscribeDragAndDrop() {
+	// 	dragula([this.todoList, this.doingList, this.doneList]).on(
+	// 		'drop',
+	// 		(el, target, source, sibling) => {
+	// 			console.log('el', el)
+	// 			console.log('target', target)
+	// 			console.log('source', source)
+	// 			console.log('sibling', sibling)
+	// 		}
+	// 	)
+	// }
+	subscribeDragAndDrop(
+		onDrop: Element,
+		sibling: Element | null,
+		newStatus: Status
+	) {
 		dragula([this.todoList, this.doingList, this.doneList]).on(
 			'drop',
 			(el, target, source, sibling) => {
@@ -46,7 +62,18 @@ export class TaskRederer {
 				console.log('target', target)
 				console.log('source', source)
 				console.log('sibling', sibling)
+
+				let newStatus: Status = statusMap.todo
+
+				if (target.id === 'doingList') newStatus = statusMap.doing
+				if (target.id === 'doneList') newStatus = statusMap.done
+
+				onDrop(el, sibling, newStatus)
 			}
 		)
+	}
+
+	getId(el: Element) {
+		return el.id
 	}
 }
