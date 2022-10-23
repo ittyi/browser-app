@@ -1,7 +1,12 @@
 import { Task } from "./Task";
+import dragula  from "dragula";
 
 export class TaskRederer {
-	constructor(private readonly todoList: HTMLElement) {}
+	constructor(
+		private readonly todoList: HTMLElement,
+		private readonly doingList: HTMLElement,
+		private readonly doneList: HTMLElement,
+		) {}
 
 	append(task:Task) {
 		const {taskEl, deleteButtonEl} = this.render(task)
