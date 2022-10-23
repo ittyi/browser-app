@@ -16,6 +16,7 @@ class Application {
 		const createForm = document.getElementById('createForm') as HTMLElement
 
 		this.eventListener.add('submit-handler', 'submit', createForm, this.handleSubmit)
+		this.taskRenderer.subscribeDragAndDrop()
 	}
 
 	private handleSubmit = (e: Event) => {

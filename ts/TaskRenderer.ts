@@ -37,4 +37,16 @@ export class TaskRederer {
 
 		this.todoList.removeChild(taskEl)
 	}
+
+	subscribeDragAndDrop() {
+		dragula([this.todoList, this.doingList, this.doneList]).on(
+			'drop',
+			(el, target, source, sibling) => {
+				console.log('el', el)
+				console.log('target', target)
+				console.log('source', source)
+				console.log('sibling', sibling)
+			}
+		)
+	}
 }
